@@ -5,4 +5,5 @@ use_frameworks!
 
 target 'RxFirebaseAuth' do
   pod 'Firebase/Auth'
+  pod 'RxSwift', '~> 4.0'
 end

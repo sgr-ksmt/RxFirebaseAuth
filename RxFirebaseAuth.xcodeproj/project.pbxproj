@@ -9,12 +9,18 @@
 /* Begin PBXBuildFile section */
 		01970989D7D8B0D9136BD62E /* Pods_RxFirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F6F100A13ED49DEAE7200D /* Pods_RxFirebaseAuth.framework */; };
 		16E80F7B1FB20D1100E8DDA7 /* RxFirebaseAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 16E80F791FB20D1100E8DDA7 /* RxFirebaseAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16E80F851FB20DB600E8DDA7 /* Auth+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E80F821FB20DB600E8DDA7 /* Auth+Rx.swift */; };
+		16E80F861FB20DB600E8DDA7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E80F831FB20DB600E8DDA7 /* Result.swift */; };
+		16E80F871FB20DB600E8DDA7 /* User+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E80F841FB20DB600E8DDA7 /* User+Rx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16E80F761FB20D1100E8DDA7 /* RxFirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxFirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16E80F791FB20D1100E8DDA7 /* RxFirebaseAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxFirebaseAuth.h; sourceTree = "<group>"; };
 		16E80F7A1FB20D1100E8DDA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16E80F821FB20DB600E8DDA7 /* Auth+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Auth+Rx.swift"; sourceTree = "<group>"; };
+		16E80F831FB20DB600E8DDA7 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		16E80F841FB20DB600E8DDA7 /* User+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Rx.swift"; sourceTree = "<group>"; };
 		2BB8848F167D809BA2477332 /* Pods-RxFirebaseAuth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxFirebaseAuth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxFirebaseAuth/Pods-RxFirebaseAuth.debug.xcconfig"; sourceTree = "<group>"; };
 		3E799441A7F32D5FE89876A5 /* Pods-RxFirebaseAuth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxFirebaseAuth.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxFirebaseAuth/Pods-RxFirebaseAuth.release.xcconfig"; sourceTree = "<group>"; };
 		E9F6F100A13ED49DEAE7200D /* Pods_RxFirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxFirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,6 +41,7 @@
 		16E80F6C1FB20D1100E8DDA7 = {
 			isa = PBXGroup;
 			children = (
+				16E80F811FB20D9C00E8DDA7 /* Sources */,
 				16E80F781FB20D1100E8DDA7 /* RxFirebaseAuth */,
 				16E80F771FB20D1100E8DDA7 /* Products */,
 				43389C5208370E2F08492250 /* Pods */,
@@ -57,6 +64,16 @@
 				16E80F7A1FB20D1100E8DDA7 /* Info.plist */,
 			);
 			path = RxFirebaseAuth;
+			sourceTree = "<group>";
+		};
+		16E80F811FB20D9C00E8DDA7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				16E80F821FB20DB600E8DDA7 /* Auth+Rx.swift */,
+				16E80F831FB20DB600E8DDA7 /* Result.swift */,
+				16E80F841FB20DB600E8DDA7 /* User+Rx.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		2EBE82905D62DE40ECE66309 /* Frameworks */ = {
@@ -121,6 +138,7 @@
 				TargetAttributes = {
 					16E80F751FB20D1100E8DDA7 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -193,6 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16E80F861FB20DB600E8DDA7 /* Result.swift in Sources */,
+				16E80F871FB20DB600E8DDA7 /* User+Rx.swift in Sources */,
+				16E80F851FB20DB600E8DDA7 /* Auth+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +337,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BB8848F167D809BA2477332 /* Pods-RxFirebaseAuth.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -328,6 +350,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.RxFirebaseAuth";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -337,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3E799441A7F32D5FE89876A5 /* Pods-RxFirebaseAuth.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
