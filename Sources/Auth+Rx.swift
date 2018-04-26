@@ -66,7 +66,7 @@ extension Reactive where Base: Auth {
         }
     }
 
-    public func signIn(WithEmail email: String, password: String) -> Single<User> {
+    public func signIn(withEmail email: String, password: String) -> Single<User> {
         return .create { observer in
             self.base.signIn(withEmail: email, password: password, completion: singleEventHandler(observer))
             return Disposables.create()
@@ -80,7 +80,7 @@ extension Reactive where Base: Auth {
         }
     }
 
-    public func signInWithFacebook(WithAccessToken accessToken: String) -> Single<User> {
+    public func signInWithFacebook(withAccessToken accessToken: String) -> Single<User> {
         let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
         return signIn(with: credential)
     }
@@ -130,8 +130,11 @@ extension Reactive where Base: Auth {
     }
 
     public func linkWithGitHub(withToken token: String) -> Single<User> {
-        let credential = GitHubAuthProvider.credential(withToken: token)
-        return link(with: credential)
+        return link(with: GitHubAuthProvider.credential(withToken: token))
+    }
+
+    func linkWithEmailAuth(email: String, password: String) -> Single<User> {
+        return link(with: EmailAuthProvider.credential(withEmail: email, password: password))
     }
 
     public func link(with credential: AuthCredential) -> Single<User> {
