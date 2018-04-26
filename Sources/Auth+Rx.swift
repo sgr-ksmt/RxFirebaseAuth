@@ -143,6 +143,17 @@ extension Reactive where Base: Auth {
     }
 }
 
+// MARK: - Reload user
+extension Reactive where Base: Auth {
+    public func reloadUser() -> Single<User> {
+        return base.currentUser
+            .map {
+                $0.rx
+                    .reload()
+                    .flatMap { Auth.auth().currentUser.map(Single.just) ?? .error(AuthError.userNotFound) }
+            } ?? .error(AuthError.userNotFound)
+    }
+}
 
 // MARK: - Sign out
 extension Reactive where Base: Auth {
