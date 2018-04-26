@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01970989D7D8B0D9136BD62E /* Pods_RxFirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F6F100A13ED49DEAE7200D /* Pods_RxFirebaseAuth.framework */; };
+		16212C6D2091E644004F0839 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16212C6C2091E644004F0839 /* Helper.swift */; };
 		16E80F7B1FB20D1100E8DDA7 /* RxFirebaseAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 16E80F791FB20D1100E8DDA7 /* RxFirebaseAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		16E80F851FB20DB600E8DDA7 /* Auth+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E80F821FB20DB600E8DDA7 /* Auth+Rx.swift */; };
 		16E80F861FB20DB600E8DDA7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E80F831FB20DB600E8DDA7 /* Result.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16212C6C2091E644004F0839 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		16E80F761FB20D1100E8DDA7 /* RxFirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxFirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16E80F791FB20D1100E8DDA7 /* RxFirebaseAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxFirebaseAuth.h; sourceTree = "<group>"; };
 		16E80F7A1FB20D1100E8DDA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				16E80F821FB20DB600E8DDA7 /* Auth+Rx.swift */,
 				16E80F831FB20DB600E8DDA7 /* Result.swift */,
 				16E80F841FB20DB600E8DDA7 /* User+Rx.swift */,
+				16212C6C2091E644004F0839 /* Helper.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				16E80F861FB20DB600E8DDA7 /* Result.swift in Sources */,
 				16E80F871FB20DB600E8DDA7 /* User+Rx.swift in Sources */,
 				16E80F851FB20DB600E8DDA7 /* Auth+Rx.swift in Sources */,
+				16212C6D2091E644004F0839 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

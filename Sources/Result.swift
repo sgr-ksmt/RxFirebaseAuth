@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 public enum ResultError<T>: Error {
     case illegalCombination(T?, Error?)
@@ -24,6 +25,23 @@ enum Result<T> {
             self = .failure(error)
         default:
             self = .failure(ResultError.illegalCombination(value, error))
+        }
+    }
+
+    init(error: Error?, ifNoError value: @autoclosure () -> T) {
+        if let error = error {
+            self = .failure(error)
+        } else {
+            self = .success(value())
+        }
+    }
+
+    func convertSingleObservable(for observer: (SingleEvent<T>) -> Void) {
+        switch self {
+        case let .success(value):
+            observer(.success(value))
+        case let .failure(error):
+            observer(.error(error))
         }
     }
 }
