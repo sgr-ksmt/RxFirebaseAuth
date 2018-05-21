@@ -58,7 +58,7 @@ extension Reactive where Base: Auth {
 
     public func createUserAndRetrieveData(withEmail email: String, password: String) -> Single<AuthDataResult> {
         return .create { observer in
-            self.base.createUser(withEmail: email, password: password, completion: singleEventHandler(observer))
+            self.base.createUserAndRetrieveData(withEmail: email, password: password, completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }
