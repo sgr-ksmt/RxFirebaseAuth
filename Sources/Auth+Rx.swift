@@ -43,13 +43,6 @@ extension Reactive where Base: Auth {
 extension Reactive where Base: Auth {
     public func createUser(withEmail email: String, password: String) -> Single<User> {
         return .create { observer in
-            self.base.createUser(withEmail: email, password: password, completion: singleEventHandler(observer))
-            return Disposables.create()
-        }
-    }
-
-    public func createUserAndRetrieveData(withEmail email: String, password: String) -> Single<AuthDataResult> {
-        return .create { observer in
             self.base.createUser(withEmail: email, password: password, completion: { (result, error) in
                 if let error = error {
                     observer(.error(error))
@@ -59,6 +52,13 @@ extension Reactive where Base: Auth {
                     observer(.error(ResultError.illegalCombination(result, error)))
                 }
             })
+            return Disposables.create()
+        }
+    }
+
+    public func createUserAndRetrieveData(withEmail email: String, password: String) -> Single<AuthDataResult> {
+        return .create { observer in
+            self.base.createUser(withEmail: email, password: password, completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }
