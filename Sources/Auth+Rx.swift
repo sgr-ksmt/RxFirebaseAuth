@@ -50,7 +50,15 @@ extension Reactive where Base: Auth {
 
     public func createUserAndRetrieveData(withEmail email: String, password: String) -> Single<AuthDataResult> {
         return .create { observer in
-            self.base.createUserAndRetrieveData(withEmail: email, password: password, completion: singleEventHandler(observer))
+            self.base.createUser(withEmail: email, password: password, completion: { (result, error) in
+                if let error = error {
+                    observer(.error(error))
+                } else if let result = result  {
+                    observer(.success(result.user))
+                } else {
+                    observer(.error(ResultError.illegalCombination(result, error)))
+                }
+            })
             return Disposables.create()
         }
     }
@@ -61,21 +69,45 @@ extension Reactive where Base: Auth {
 extension Reactive where Base: Auth {
     public func signInAnonymously() -> Single<User> {
         return .create { observer in
-            self.base.signInAnonymously(completion: singleEventHandler(observer))
+            self.base.signInAnonymously(completion: { (result, error) in
+                if let error = error {
+                    observer(.error(error))
+                } else if let result = result  {
+                    observer(.success(result.user))
+                } else {
+                    observer(.error(ResultError.illegalCombination(result, error)))
+                }
+            })
             return Disposables.create()
         }
     }
 
     public func signIn(withEmail email: String, password: String) -> Single<User> {
         return .create { observer in
-            self.base.signIn(withEmail: email, password: password, completion: singleEventHandler(observer))
+            self.base.signIn(withEmail: email, password: password, completion: { (result, error) in
+                if let error = error {
+                    observer(.error(error))
+                } else if let result = result  {
+                    observer(.success(result.user))
+                } else {
+                    observer(.error(ResultError.illegalCombination(result, error)))
+                }
+            })
             return Disposables.create()
         }
     }
 
     public func signInWith(customToken: String) -> Single<User> {
         return .create { observer in
-            self.base.signIn(withCustomToken: customToken, completion: singleEventHandler(observer))
+            self.base.signIn(withCustomToken: customToken, completion: { (result, error) in
+                if let error = error {
+                    observer(.error(error))
+                } else if let result = result  {
+                    observer(.success(result.user))
+                } else {
+                    observer(.error(ResultError.illegalCombination(result, error)))
+                }
+            })
             return Disposables.create()
         }
     }
