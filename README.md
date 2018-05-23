@@ -28,7 +28,7 @@ Auth.auth().rx.signInAnonymously()
 
 ## Dependencies
 - RxSwift 4.x
-- Firebase Auth 4.x
+- Firebase Auth 5.x (RxFirebaseAuth v1.x: Firebase Auth 4.x)
 
 ## Installation
 ### CocoaPods
@@ -38,7 +38,12 @@ Auth.auth().rx.signInAnonymously()
 it, simply add the following line to your Podfile:
 
 ```ruby
+# Firebase 5.x
+pod 'RxFirebaseAuth', '~> 2.0'
+
+# Firebase 4.x
 pod 'RxFirebaseAuth', '~> 1.0'
+
 ```
 
 and run `pod install`
