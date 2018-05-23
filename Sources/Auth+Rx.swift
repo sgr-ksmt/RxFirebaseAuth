@@ -47,13 +47,6 @@ extension Reactive where Base: Auth {
             return Disposables.create()
         }
     }
-
-    public func createUserAndRetrieveData(withEmail email: String, password: String) -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.createUserAndRetrieveData(withEmail: email, password: password, completion: singleEventHandler(observer))
-            return Disposables.create()
-        }
-    }
 }
 
 
@@ -80,31 +73,24 @@ extension Reactive where Base: Auth {
         }
     }
 
-    public func signInWithFacebook(withAccessToken accessToken: String) -> Single<User> {
+    public func signInWithFacebook(withAccessToken accessToken: String) -> Single<AuthDataResult> {
         let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
-        return signIn(with: credential)
+        return signInAndRetriveData(with: credential)
     }
 
-    public func signInWithTwitter(withToken token: String, secret: String) -> Single<User> {
+    public func signInWithTwitter(withToken token: String, secret: String) -> Single<AuthDataResult> {
         let credential = TwitterAuthProvider.credential(withToken: token, secret: secret)
-        return signIn(with: credential)
+        return signInAndRetriveData(with: credential)
     }
 
-    public func signInWithPhoneAuth(withVerificationID verificationID: String, verificationCode code: String) -> Single<User> {
+    public func signInWithPhoneAuth(withVerificationID verificationID: String, verificationCode code: String) -> Single<AuthDataResult> {
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code)
-        return signIn(with: credential)
+        return signInAndRetriveData(with: credential)
     }
 
-    public func signInWithGitHub(withToken token: String) -> Single<User> {
+    public func signInWithGitHub(withToken token: String) -> Single<AuthDataResult> {
         let credential = GitHubAuthProvider.credential(withToken: token)
-        return signIn(with: credential)
-    }
-
-    public func signIn(with credential: AuthCredential) -> Single<User> {
-        return .create { observer in
-            self.base.signIn(with: credential, completion: singleEventHandler(observer))
-            return Disposables.create()
-        }
+        return signInAndRetriveData(with: credential)
     }
 
     public func signInAndRetriveData(with credential: AuthCredential) -> Single<AuthDataResult> {
@@ -117,28 +103,28 @@ extension Reactive where Base: Auth {
 
 // MARK: - Link
 extension Reactive where Base: Auth {
-    public func linkWithFacebook(withAccessToken accessToken: String) -> Single<User> {
+    public func linkWithFacebook(withAccessToken accessToken: String) -> Single<AuthDataResult> {
         return link(with: FacebookAuthProvider.credential(withAccessToken: accessToken))
     }
 
-    public func linkWithTwitter(withToken token: String, secret: String) -> Single<User> {
+    public func linkWithTwitter(withToken token: String, secret: String) -> Single<AuthDataResult> {
         return link(with: TwitterAuthProvider.credential(withToken: token, secret: secret))
     }
 
-    public func linkWithPhoneAuth(withVerificationID verificationID: String, verificationCode code: String) -> Single<User> {
+    public func linkWithPhoneAuth(withVerificationID verificationID: String, verificationCode code: String) -> Single<AuthDataResult> {
         return link(with: PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code))
     }
 
-    public func linkWithGitHub(withToken token: String) -> Single<User> {
+    public func linkWithGitHub(withToken token: String) -> Single<AuthDataResult> {
         return link(with: GitHubAuthProvider.credential(withToken: token))
     }
 
-    func linkWithEmailAuth(email: String, password: String) -> Single<User> {
+    func linkWithEmailAuth(email: String, password: String) -> Single<AuthDataResult> {
         return link(with: EmailAuthProvider.credential(withEmail: email, password: password))
     }
 
-    public func link(with credential: AuthCredential) -> Single<User> {
-        return base.currentUser.map { $0.rx.link(with: credential) } ?? .error(AuthError.userNotFound)
+    public func link(with credential: AuthCredential) -> Single<AuthDataResult> {
+        return base.currentUser.map { $0.rx.linkAndRetrieveData(with: credential) } ?? .error(AuthError.userNotFound)
     }
 
     public func unlink(with provider: String) -> Single<User> {

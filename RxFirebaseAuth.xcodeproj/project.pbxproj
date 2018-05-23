@@ -119,7 +119,6 @@
 				16E80F721FB20D1100E8DDA7 /* Frameworks */,
 				16E80F731FB20D1100E8DDA7 /* Headers */,
 				16E80F741FB20D1100E8DDA7 /* Resources */,
-				9F111471E70AB28E8812A2EC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -174,21 +173,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9F111471E70AB28E8812A2EC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RxFirebaseAuth/Pods-RxFirebaseAuth-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A2A563B1BEF57F7A2AE9252C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

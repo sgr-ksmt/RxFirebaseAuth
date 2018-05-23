@@ -20,9 +20,9 @@ extension Reactive where Base: User {
         }
     }
 
-    public func reauthenticate(with credential: AuthCredential) -> Single<Void> {
+    public func reauthenticateAndRetrieveData(with credential: AuthCredential) -> Single<AuthDataResult> {
         return .create { [weak user = self.base] observer in
-            user?.reauthenticate(with: credential, completion: singleEventErrorHandler(observer))
+            user?.reauthenticateAndRetrieveData(with: credential, completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }
@@ -30,9 +30,9 @@ extension Reactive where Base: User {
 
 // MARK: - link/unlink
 extension Reactive where Base: User {
-    public func link(with credential: AuthCredential) -> Single<User> {
+    public func linkAndRetrieveData(with credential: AuthCredential) -> Single<AuthDataResult> {
         return .create { [weak user = self.base] observer in
-            user?.link(with: credential, completion: singleEventHandler(observer))
+            user?.linkAndRetrieveData(with: credential, completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }

@@ -4,6 +4,6 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'RxFirebaseAuth' do
-  pod 'Firebase/Auth'
+  pod 'Firebase/Auth', '~> 5.0'
   pod 'RxSwift', '~> 4.0'
 end
