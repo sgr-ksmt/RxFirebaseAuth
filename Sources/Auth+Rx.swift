@@ -41,7 +41,7 @@ extension Reactive where Base: Auth {
 
 // MARK: - Create user
 extension Reactive where Base: Auth {
-    public func createUser(withEmail email: String, password: String) -> Single<User> {
+    public func createUser(withEmail email: String, password: String) -> Single<AuthDataResult> {
         return .create { observer in
             self.base.createUser(withEmail: email, password: password, completion: singleEventHandler(observer))
             return Disposables.create()
@@ -59,21 +59,21 @@ extension Reactive where Base: Auth {
 
 // MARK: - Sign in
 extension Reactive where Base: Auth {
-    public func signInAnonymously() -> Single<User> {
+    public func signInAnonymously() -> Single<AuthDataResult> {
         return .create { observer in
             self.base.signInAnonymously(completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }
-
-    public func signIn(withEmail email: String, password: String) -> Single<User> {
+    
+    public func signIn(withEmail email: String, password: String) -> Single<AuthDataResult> {
         return .create { observer in
             self.base.signIn(withEmail: email, password: password, completion: singleEventHandler(observer))
             return Disposables.create()
         }
     }
-
-    public func signInWith(customToken: String) -> Single<User> {
+    
+    public func signInWith(customToken: String) -> Single<AuthDataResult> {
         return .create { observer in
             self.base.signIn(withCustomToken: customToken, completion: singleEventHandler(observer))
             return Disposables.create()
