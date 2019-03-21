@@ -39,7 +39,7 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 # Firebase 5.x
-pod 'RxFirebaseAuth', '~> 2.0'
+pod 'RxFirebaseAuth', '~> 2.1'
 
 # Firebase 4.x
 pod 'RxFirebaseAuth', '~> 1.0'

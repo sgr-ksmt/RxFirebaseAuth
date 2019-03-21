@@ -36,10 +36,29 @@ enum Result<T> {
         }
     }
 
+    init(_ f: () throws -> T) {
+        do {
+            self = .success(try f())
+        } catch {
+            self = .failure(error)
+        }
+    }
+
     func convertSingleObservable(for observer: (SingleEvent<T>) -> Void) {
         switch self {
         case let .success(value):
             observer(.success(value))
+        case let .failure(error):
+            observer(.error(error))
+        }
+    }
+}
+
+extension Result where T == Void {
+    func convertCompletableObservable(for observer: (CompletableEvent) -> Void) {
+        switch self {
+        case .success:
+            observer(.completed)
         case let .failure(error):
             observer(.error(error))
         }

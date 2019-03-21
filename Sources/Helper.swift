@@ -16,3 +16,11 @@ func singleEventHandler<T>(_ observer: @escaping (SingleEvent<T>) -> Void) -> (T
 func singleEventErrorHandler(_ observer: @escaping (SingleEvent<Void>) -> Void) -> (Error?) -> Void {
     return { Result(error: $0, ifNoError: ()).convertSingleObservable(for: observer) }
 }
+
+func completableEventHandler(_ observer: @escaping (CompletableEvent) -> Void) -> (Error?) -> Void {
+    return { Result(error: $0, ifNoError: ()).convertCompletableObservable(for: observer) }
+}
+
+func completableEventHandler(_ f: (() throws -> Void), _ observer: @escaping (CompletableEvent) -> Void) {
+    Result(f).convertCompletableObservable(for: observer)
+}

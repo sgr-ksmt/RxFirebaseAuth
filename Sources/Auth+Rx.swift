@@ -17,23 +17,23 @@ public enum AuthError: Error {
 // MARK: - Listener
 extension Reactive where Base: Auth {
     public func addStateDidChangeListener() -> Observable<(Auth, User?)> {
-        return .create { observer in
-            let handle = self.base.addStateDidChangeListener { (auth, user) in
-                observer.onNext((auth, user))
-            }
+        return .create { [weak auth = base] observer in
+            let handle = auth?.addStateDidChangeListener { observer.onNext(($0, $1)) }
             return Disposables.create {
-                self.base.removeStateDidChangeListener(handle)
+                if let handle = handle {
+                    auth?.removeStateDidChangeListener(handle)
+                }
             }
         }
     }
 
     public func addIDTokenDidChangeListener() -> Observable<(Auth, User?)> {
-        return .create { observer in
-            let handle = self.base.addIDTokenDidChangeListener { (auth, user) in
-                observer.onNext((auth, user))
-            }
+        return .create { [weak auth = base] observer in
+            let handle = auth?.addIDTokenDidChangeListener { observer.onNext(($0, $1)) }
             return Disposables.create {
-                self.base.removeIDTokenDidChangeListener(handle)
+                if let handle = handle {
+                    auth?.removeStateDidChangeListener(handle)
+                }
             }
         }
     }
@@ -42,8 +42,8 @@ extension Reactive where Base: Auth {
 // MARK: - Create user
 extension Reactive where Base: Auth {
     public func createUser(withEmail email: String, password: String) -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.createUser(withEmail: email, password: password, completion: singleEventHandler(observer))
+        return .create { [weak auth = base] in
+            auth?.createUser(withEmail: email, password: password, completion: singleEventHandler($0))
             return Disposables.create()
         }
     }
@@ -53,49 +53,64 @@ extension Reactive where Base: Auth {
 // MARK: - Sign in
 extension Reactive where Base: Auth {
     public func signInAnonymously() -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.signInAnonymously(completion: singleEventHandler(observer))
+        return .create { [weak auth = base] in
+            auth?.signInAnonymously(completion: singleEventHandler($0))
             return Disposables.create()
         }
     }
     
     public func signIn(withEmail email: String, password: String) -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.signIn(withEmail: email, password: password, completion: singleEventHandler(observer))
+        return .create { [weak auth = base] in
+            auth?.signIn(withEmail: email, password: password, completion: singleEventHandler($0))
             return Disposables.create()
         }
     }
     
     public func signInWith(customToken: String) -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.signIn(withCustomToken: customToken, completion: singleEventHandler(observer))
+        return .create { [weak auth = base] in
+            auth?.signIn(withCustomToken: customToken, completion: singleEventHandler($0))
             return Disposables.create()
         }
     }
 
+    public func signInWithGoogle(withIDToken idToken: String, accessToken: String) -> Single<AuthDataResult> {
+        return signInAndRetriveData(with: GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken))
+    }
+
     public func signInWithFacebook(withAccessToken accessToken: String) -> Single<AuthDataResult> {
-        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
-        return signInAndRetriveData(with: credential)
+        return signInAndRetriveData(with: FacebookAuthProvider.credential(withAccessToken: accessToken))
     }
 
     public func signInWithTwitter(withToken token: String, secret: String) -> Single<AuthDataResult> {
-        let credential = TwitterAuthProvider.credential(withToken: token, secret: secret)
-        return signInAndRetriveData(with: credential)
+        return signInAndRetriveData(with: TwitterAuthProvider.credential(withToken: token, secret: secret))
     }
 
     public func signInWithPhoneAuth(withVerificationID verificationID: String, verificationCode code: String) -> Single<AuthDataResult> {
-        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code)
-        return signInAndRetriveData(with: credential)
+        return signInAndRetriveData(with: PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: code))
     }
 
     public func signInWithGitHub(withToken token: String) -> Single<AuthDataResult> {
-        let credential = GitHubAuthProvider.credential(withToken: token)
-        return signInAndRetriveData(with: credential)
+        return signInAndRetriveData(with: GitHubAuthProvider.credential(withToken: token))
+    }
+
+    public func signInWithGameCenter() -> Single<AuthDataResult> {
+        return Single<AuthCredential>.create { observer in
+            GameCenterAuthProvider.getCredential { credential, error in
+                switch Result(credential, error) {
+                case let .success(credential):
+                    observer(.success(credential))
+                case let .failure(error):
+                    observer(.error(error))
+                }
+            }
+            return Disposables.create()
+        }
+        .flatMap(signInAndRetriveData(with:))
     }
 
     public func signInAndRetriveData(with credential: AuthCredential) -> Single<AuthDataResult> {
-        return .create { observer in
-            self.base.signInAndRetrieveData(with: credential, completion: singleEventHandler(observer))
+        return .create { [weak auth = base] in
+            auth?.signInAndRetrieveData(with: credential, completion: singleEventHandler($0))
             return Disposables.create()
         }
     }
@@ -134,26 +149,23 @@ extension Reactive where Base: Auth {
 
 // MARK: - Reload user
 extension Reactive where Base: Auth {
+    public func reloadUser() -> Completable {
+        guard let currentUser = base.currentUser else {
+            return .empty()
+        }
+        return currentUser.rx.reload()
+    }
     public func reloadUser() -> Single<User> {
-        return base.currentUser
-            .map {
-                $0.rx
-                    .reload()
-                    .flatMap { Auth.auth().currentUser.map(Single.just) ?? .error(AuthError.userNotFound) }
-            } ?? .error(AuthError.userNotFound)
+        return reloadUser()
+            .andThen(Auth.auth().currentUser.map(Single.just) ?? .error(AuthError.userNotFound))
     }
 }
 
 // MARK: - Sign out
 extension Reactive where Base: Auth {
-    public func signOut() -> Single<Void> {
-        return .create { observer in
-            do {
-                try self.base.signOut()
-                observer(.success(()))
-            } catch {
-                observer(.error(error))
-            }
+    public func signOut() -> Completable {
+        return .create { [weak auth = base] in
+            completableEventHandler({ try auth?.signOut() }, $0)
             return Disposables.create()
         }
     }
@@ -162,16 +174,16 @@ extension Reactive where Base: Auth {
 
 // MARK: - Send password reset
 extension Reactive where Base: Auth {
-    public func sendPasswordReset(withEmail email: String) -> Single<Void> {
-        return .create { observer in
-            self.base.sendPasswordReset(withEmail: email, completion: singleEventErrorHandler(observer))
+    public func sendPasswordReset(withEmail email: String) -> Completable {
+        return .create { [weak auth = base] in
+            auth?.sendPasswordReset(withEmail: email, completion: completableEventHandler($0))
             return Disposables.create()
         }
     }
 
-    public func sendPasswordReset(withEmail email: String, actionCodeSettings: ActionCodeSettings) -> Single<Void> {
-        return .create { observer in
-            self.base.sendPasswordReset(withEmail: email, actionCodeSettings: actionCodeSettings, completion: singleEventErrorHandler(observer))
+    public func sendPasswordReset(withEmail email: String, actionCodeSettings: ActionCodeSettings) -> Completable {
+        return .create { [weak auth = base] in
+            auth?.sendPasswordReset(withEmail: email, actionCodeSettings: actionCodeSettings, completion: completableEventHandler($0))
             return Disposables.create()
         }
     }
