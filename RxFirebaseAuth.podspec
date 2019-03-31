@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxFirebaseAuth"
-  s.version          = "2.1"
+  s.version          = "2.2"
   s.summary          = "Combination of RxSwift and Firebase/Auth"
   s.homepage         = "https://github.com/sgr-ksmt/RxFirebaseAuth"
   s.license          = 'MIT'
@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
   s.source_files     = "Sources/**/*"
   s.static_framework = true
+  s.swift_version    = "5.0"
   s.dependency "Firebase/Auth", "~> 5.0"
   s.dependency "RxSwift", "~> 4.0"
 end
