@@ -27,7 +27,7 @@ Auth.auth().rx.signInAnonymously()
 
 
 ## Dependencies
-- RxSwift 4.x
+- RxSwift 5.x
 - Firebase Auth 5.x (RxFirebaseAuth v1.x: Firebase Auth 4.x)
 
 ## Installation
@@ -39,7 +39,7 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 # Firebase 5.x
-pod 'RxFirebaseAuth', '~> 2.2'
+pod 'RxFirebaseAuth', '~> 2.3'
 
 # Firebase 4.x
 pod 'RxFirebaseAuth', '~> 1.0'
