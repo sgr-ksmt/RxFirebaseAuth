@@ -17,13 +17,11 @@ PODS:
   - GoogleUtilities/Logger (5.5.0):
     - GoogleUtilities/Environment
   - GTMSessionFetcher/Core (1.2.1)
-  - RxAtomic (4.4.2)
-  - RxSwift (4.4.2):
-    - RxAtomic (>= 4.4.2, ~> 4.4)
+  - RxSwift (5.0.0)
 
 DEPENDENCIES:
   - Firebase/Auth (~> 5.0)
-  - RxSwift (~> 4.0)
+  - RxSwift (~> 5.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -33,7 +31,6 @@ SPEC REPOS:
     - FirebaseCore
     - GoogleUtilities
     - GTMSessionFetcher
-    - RxAtomic
     - RxSwift
 
 SPEC CHECKSUMS:
@@ -43,9 +40,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 22a79a961c3951ef2f77b67bfbc99e454247b319
   GoogleUtilities: 6481e6318c5fcabaaa8513ef8120f329055d7c10
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
-  RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 06f375aeeb3ad5f0eeda5d3c5a57aa36b3d855c3
+PODFILE CHECKSUM: 5cc66b752201d9e594ca238bdaf50fed85643aa4
 
 COCOAPODS: 1.6.1
