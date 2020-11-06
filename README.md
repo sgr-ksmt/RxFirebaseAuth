@@ -28,7 +28,7 @@ Auth.auth().rx.signInAnonymously()
 
 ## Dependencies
 - RxSwift 5.x
-- Firebase Auth 6.x
+- Firebase Auth 7.x
 
 ## Installation
 ### CocoaPods
